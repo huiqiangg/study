@@ -13,20 +13,17 @@
                     搜索
                 </div>
                 <div class="panel-body">
-                    <form role="form" class="form-inline">
+                    <form id="search_form" role="form"  class="form-inline">
                         <div class="form-group">
-                            <label for="name">名称</label>
-                            <input type="text" class="form-control" id="name" placeholder="请输入名称">
+                            <label for="name">提示版本号</label>
+                            <input type="text" class="form-control" value="{{isset($_REQUEST['version'])?$_REQUEST['version']:''}}" name="version" placeholder="请输入版本号">
                         </div>
                         <div class="form-group">
-                            <label for="name">状态</label>
-                            <select class="form-control">
-                                <option>上架</option>
-                                <option>下架</option>
-                            </select>
+                            <label for="name">更新版本号</label>
+                            <input type="text" class="form-control" value="{{isset($_REQUEST['update_version'])?$_REQUEST['update_version']:''}}" name="update_version" placeholder="请输入版本号">
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-default">开始搜索</button>
+                            <button onclick="search('{{URL::current()}}')" type="button" class="btn btn-default">开始搜索</button>
                         </div>
                     </form>
                 </div>
@@ -58,7 +55,7 @@
                             <td>{{$v->os_type==1?'IOS':'Android' }}</td>
                             <td style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:40%;'>{{$v->content }}</td>
                             <td>
-                                    <a  href="{{ route('version.update',['id'=>$v->id]) }}" class="menu btn btn-warning btn-rounded">编辑</a>
+                                    <a  href="{{ route('version.edit',['id'=>$v->id]) }}" class="menu btn btn-warning btn-rounded">编辑</a>
                             </td>
                         </tr>
                     @endforeach

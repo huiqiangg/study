@@ -26,11 +26,11 @@ Route::group(['prefix' => 'admin',['middleware' => 'web'],'namespace' => 'Admin'
     Route::get('content','ContentController@index')->name('content');
 
     //版本管理
-    Route::get('version','VersionController@index')->name('version');
+    Route::any('version','VersionController@index')->name('version');
     Route::get('addversion','VersionController@create')->name('version.add');
     Route::post('addversion','VersionController@store');
-    Route::get('updateversion/{id}','VersionController@edit')->name('version.update');
-    Route::post('updateversion/{id}','VersionController@update');
+    Route::get('editversion/{id}','VersionController@edit')->name('version.edit');
+    Route::post('updateversion','VersionController@update')->name('version.update');
 
     //用户管理页
     Route::get('system','UserController@white')->name('system');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Validator;
+use App\Models\AppVersion;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -12,12 +14,22 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class VersionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function index(Request $request)
+    {
+        $objects = AppVersion::query();
+        if (!empty($request->version)) {
+            $objects->where('version', '=', $request->version);
+        }
+        if (!empty($request->update_version)) {
+            $objects->where('update_version', '<=', $request->update_version);
+        }
+        $scales = $objects->orderBy('id', 'desc')->paginate(10)->appends($request->all());
+        return view('admin.version.version', ['paginator' => $scales]);
+    }
+
+    public function version(Request $request)
     {
         $perPage = 3;//每页显示几条
         if ($request->has('page')) {
