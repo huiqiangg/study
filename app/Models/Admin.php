@@ -38,10 +38,10 @@ class Admin extends Authenticatable
                     case '<':
                     case 'like':
                         $users->where($item['field'], $item['option'], $item['value']);
-                        continue;
+                        break;
                     case 'in':
                         $users->whereIn($item['field'], $item['value']);
-                        continue;
+                        break;
                 }
             }
         }
